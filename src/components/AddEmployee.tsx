@@ -179,7 +179,7 @@ function AddEmployee() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center min-h-screen px-4">
       <Card className="text-center m-8">
         <CardHeader>
           <CardTitle>Neuer Mitarbeiter</CardTitle>
@@ -279,7 +279,7 @@ function AddEmployee() {
               </Button>
             </div>
           </DrawerTrigger>
-          <DrawerContent className="pb-20">
+          <DrawerContent className="pb-32 pt-4 sm:pt-0">
             <div className="mx-auto w-full max-w-sm">
               <DrawerHeader>
                 <DrawerTitle>Täglicher Arbeitseinsatz</DrawerTitle>
