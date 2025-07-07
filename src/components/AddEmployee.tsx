@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { Minus, Plus } from "lucide-react";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
 import {
   Drawer,
@@ -38,38 +37,38 @@ export type Employee = {
 };
 
 function AddEmployee() {
-  const hours = [
-    {
-      hour: 1,
-    },
-    {
-      hour: 2,
-    },
-    {
-      hour: 3,
-    },
-    {
-      hour: 4,
-    },
-    {
-      hour: 5,
-    },
-    {
-      hour: 6,
-    },
-    {
-      hour: 7,
-    },
-    {
-      hour: 8,
-    },
-    {
-      hour: 9,
-    },
-    {
-      hour: 10,
-    },
-  ];
+  //   const hours = [
+  //     {
+  //       hour: 1,
+  //     },
+  //     {
+  //       hour: 2,
+  //     },
+  //     {
+  //       hour: 3,
+  //     },
+  //     {
+  //       hour: 4,
+  //     },
+  //     {
+  //       hour: 5,
+  //     },
+  //     {
+  //       hour: 6,
+  //     },
+  //     {
+  //       hour: 7,
+  //     },
+  //     {
+  //       hour: 8,
+  //     },
+  //     {
+  //       hour: 9,
+  //     },
+  //     {
+  //       hour: 10,
+  //     },
+  //   ];
   const [days, setDays] = useState<string[]>([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -318,21 +317,6 @@ function AddEmployee() {
                   <Plus />
                   <span className="sr-only">plus</span>
                 </Button>
-              </div>
-              <div className="mt-3 h-[120px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={hours}>
-                    <Bar
-                      dataKey="hour"
-                      style={
-                        {
-                          fill: "hsl(var(--foreground))",
-                          opacity: 0.9,
-                        } as React.CSSProperties
-                      }
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
               </div>
             </div>
             <DrawerFooter>
