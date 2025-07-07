@@ -179,7 +179,7 @@ function AddEmployee() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen px-4">
+    <section className="flex flex-col items-center justify-center  gap-4 px-4">
       <Card className="text-center m-8">
         <CardHeader>
           <CardTitle>Neuer Mitarbeiter</CardTitle>
@@ -270,79 +270,79 @@ function AddEmployee() {
             </div>
           </div>
         </CardFooter>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <div className="flex items-center justify-center">
-              {" "}
-              <Button className="max-w-80 " variant="outline">
-                Arbeitsstunden/Tag
-              </Button>
-            </div>
-          </DrawerTrigger>
-          <DrawerContent className="pb-32 pt-4 sm:pt-0">
-            <div className="mx-auto w-full max-w-sm">
-              <DrawerHeader>
-                <DrawerTitle>Täglicher Arbeitseinsatz</DrawerTitle>
-                <DrawerDescription>
-                  Für Wieviele Stunden am Tag wurde der Mitarbeiter eingeplant?
-                </DrawerDescription>
-              </DrawerHeader>
-              <div className="p-4 pb-0">
-                <div className="flex items-center justify-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 shrink-0 rounded-full"
-                    onClick={() => onClick(-1)}
-                    disabled={hour <= 0}
-                  >
-                    <Minus />
-                    <span className="sr-only">minus</span>
-                  </Button>
-                  <div className="flex-1 text-center">
-                    <div className="text-7xl font-bold tracking-tighter">
-                      {hour}
-                    </div>
-                    <div className="text-muted-foreground text-[0.70rem] uppercase">
-                      Stunden/Tag
-                    </div>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 shrink-0 rounded-full"
-                    onClick={() => onClick(1)}
-                    disabled={hour >= 10}
-                  >
-                    <Plus />
-                    <span className="sr-only">plus</span>
-                  </Button>
-                </div>
-                <div className="mt-3 h-[120px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={hours}>
-                      <Bar
-                        dataKey="hour"
-                        style={
-                          {
-                            fill: "hsl(var(--foreground))",
-                            opacity: 0.9,
-                          } as React.CSSProperties
-                        }
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-              <DrawerFooter>
-                <DrawerClose asChild>
-                  <Button variant="outline">Speichern</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </div>
-          </DrawerContent>
-        </Drawer>
+        {/* Drawer should be rendered outside the Card to avoid z-index/overflow issues */}
       </Card>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <div className="flex items-center justify-center z-50">
+            <Button className="max-w-80 " variant="outline">
+              Arbeitsstunden/Tag
+            </Button>
+          </div>
+        </DrawerTrigger>
+        <DrawerContent className="pb-32 pt-4 sm:pt-0">
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle>Täglicher Arbeitseinsatz</DrawerTitle>
+              <DrawerDescription>
+                Für Wieviele Stunden am Tag wurde der Mitarbeiter eingeplant?
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="p-4 pb-0">
+              <div className="flex items-center justify-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 shrink-0 rounded-full"
+                  onClick={() => onClick(-1)}
+                  disabled={hour <= 0}
+                >
+                  <Minus />
+                  <span className="sr-only">minus</span>
+                </Button>
+                <div className="flex-1 text-center">
+                  <div className="text-7xl font-bold tracking-tighter">
+                    {hour}
+                  </div>
+                  <div className="text-muted-foreground text-[0.70rem] uppercase">
+                    Stunden/Tag
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 shrink-0 rounded-full"
+                  onClick={() => onClick(1)}
+                  disabled={hour >= 10}
+                >
+                  <Plus />
+                  <span className="sr-only">plus</span>
+                </Button>
+              </div>
+              <div className="mt-3 h-[120px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={hours}>
+                    <Bar
+                      dataKey="hour"
+                      style={
+                        {
+                          fill: "hsl(var(--foreground))",
+                          opacity: 0.9,
+                        } as React.CSSProperties
+                      }
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button variant="outline">Speichern</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
       <Button onClick={handleSaveEmployee}>Mitarbeiter Speichern</Button>
     </section>
   );
