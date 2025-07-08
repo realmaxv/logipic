@@ -1,31 +1,14 @@
-"use client";
 import * as React from "react";
-import { Minus, Plus } from "lucide-react";
 
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Slider } from "./ui/slider";
+import { useNavigate } from "react-router";
 
 export type Employee = {
   name: string;
@@ -37,45 +20,13 @@ export type Employee = {
 };
 
 function AddEmployee() {
-  //   const hours = [
-  //     {
-  //       hour: 1,
-  //     },
-  //     {
-  //       hour: 2,
-  //     },
-  //     {
-  //       hour: 3,
-  //     },
-  //     {
-  //       hour: 4,
-  //     },
-  //     {
-  //       hour: 5,
-  //     },
-  //     {
-  //       hour: 6,
-  //     },
-  //     {
-  //       hour: 7,
-  //     },
-  //     {
-  //       hour: 8,
-  //     },
-  //     {
-  //       hour: 9,
-  //     },
-  //     {
-  //       hour: 10,
-  //     },
-  //   ];
   const [days, setDays] = useState<string[]>([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pics, setPics] = useState(0);
   const [hour, setHour] = useState(0);
   const [employee, setEmployee] = useState<Employee[]>([]);
-
+  const navigate = useNavigate();
   const handleSaveEmployee: React.MouseEventHandler<HTMLButtonElement> = (
     e
   ) => {
@@ -106,14 +57,13 @@ function AddEmployee() {
       setPics(0);
       setHour(0);
       alert("Mitarbeiter erfolgreich hinzugefügt.");
+      navigate("/employees");
     } else {
       alert("Bitte fülle erst alle Felder aus.");
     }
   };
   console.log(employee);
-  function onClick(adjustment: number) {
-    setHour((prev) => prev + adjustment);
-  }
+
   const handleCheckboxChange: React.FormEventHandler<HTMLButtonElement> = (
     e
   ) => {
@@ -178,11 +128,8 @@ function AddEmployee() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center  gap-4 px-4">
-      <Card className="text-center m-8">
-        <CardHeader>
-          <CardTitle>Neuer Mitarbeiter</CardTitle>
-        </CardHeader>
+    <section className="flex flex-col items-center justify-center  py-2 ">
+      <Card className="text-center flex items-start justify-start h-160">
         <CardContent className="text-left ">
           <p className="py-2">Nachname:</p>
           <Input
@@ -269,65 +216,23 @@ function AddEmployee() {
             </div>
           </div>
         </CardFooter>
-        {/* Drawer should be rendered outside the Card to avoid z-index/overflow issues */}
+        <div className="flex flex-col items-center justify-center outline p-4 shadow-md shadow-accent mx-6 rounded-2xl gap-4">
+          <h2>Anzahl tägl. Arbeitsstunden:</h2>
+          <p className="font-bold">{hour + " Stunden"}</p>
+          <Slider
+            className="w-[250px]"
+            defaultValue={[0]}
+            max={10}
+            step={1}
+            onValueChange={(value) => setHour(value[0])}
+          />
+        </div>
+        <div className="flex items-center justify-center w-full">
+          <Button className="w-[200px]" onClick={handleSaveEmployee}>
+            Mitarbeiter Speichern
+          </Button>
+        </div>
       </Card>
-      <Drawer>
-        <DrawerTrigger asChild>
-          <div className="flex items-center justify-center z-50">
-            <Button className="max-w-80 " variant="outline">
-              Arbeitsstunden/Tag
-            </Button>
-          </div>
-        </DrawerTrigger>
-        <DrawerContent className="pb-32 pt-4 sm:pt-0">
-          <div className="mx-auto w-full max-w-sm">
-            <DrawerHeader>
-              <DrawerTitle>Täglicher Arbeitseinsatz</DrawerTitle>
-              <DrawerDescription>
-                Für Wieviele Stunden am Tag wurde der Mitarbeiter eingeplant?
-              </DrawerDescription>
-            </DrawerHeader>
-            <div className="p-4 pb-0">
-              <div className="flex items-center justify-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8 shrink-0 rounded-full"
-                  onClick={() => onClick(-1)}
-                  disabled={hour <= 0}
-                >
-                  <Minus />
-                  <span className="sr-only">minus</span>
-                </Button>
-                <div className="flex-1 text-center">
-                  <div className="text-7xl font-bold tracking-tighter">
-                    {hour}
-                  </div>
-                  <div className="text-muted-foreground text-[0.70rem] uppercase">
-                    Stunden/Tag
-                  </div>
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8 shrink-0 rounded-full"
-                  onClick={() => onClick(1)}
-                  disabled={hour >= 10}
-                >
-                  <Plus />
-                  <span className="sr-only">plus</span>
-                </Button>
-              </div>
-            </div>
-            <DrawerFooter>
-              <DrawerClose asChild>
-                <Button variant="outline">Speichern</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </div>
-        </DrawerContent>
-      </Drawer>
-      <Button onClick={handleSaveEmployee}>Mitarbeiter Speichern</Button>
     </section>
   );
 }

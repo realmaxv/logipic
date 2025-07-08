@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 function RootLayout() {
   return (
-    <div className="pb-26 pt-26 bg-stone-200 dark:bg-accent">
+    <div className="pb-26 pt-21">
       <Header />
       <Outlet />
       <Footer />

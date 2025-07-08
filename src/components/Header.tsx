@@ -19,7 +19,7 @@ function Header() {
   };
 
   return (
-    <header className="h-25 w-full flex items-center justify-between px-6 fixed top-0 bg-white dark:bg-stone-800 z-50 shadow-md">
+    <header className="h-20 w-full flex items-center justify-between px-6 fixed top-0 bg-white dark:bg-stone-800 z-50 shadow-md">
       {" "}
       {location.pathname === "/employees" ? (
         <Link to={"/"}>
