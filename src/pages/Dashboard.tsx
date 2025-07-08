@@ -97,10 +97,7 @@ function Dashboard() {
           <h3 className="font-semibold">{` Zu schaffende pics:`}</h3>
           <p className="font-bold">{Math.floor(picsCount)}</p>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <h3 className="font-semibold">Zu schaffende pics:</h3>
-          <p className="font-bold">{picsCount}</p>
-        </div>
+        <div className="flex flex-col items-center gap-2"></div>
       </section>
     </main>
   );
