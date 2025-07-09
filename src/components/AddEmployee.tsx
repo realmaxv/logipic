@@ -1,14 +1,28 @@
+"use client";
 import * as React from "react";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { Input } from "./ui/input";
-import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { Slider } from "./ui/slider";
 import { useNavigate } from "react-router";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export type Employee = {
   name: string;
@@ -21,6 +35,8 @@ export type Employee = {
 
 function AddEmployee() {
   const [days, setDays] = useState<string[]>([]);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [open, setOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pics, setPics] = useState(0);
@@ -64,66 +80,12 @@ function AddEmployee() {
   };
   console.log(employee);
 
-  const handleCheckboxChange: React.FormEventHandler<HTMLButtonElement> = (
-    e
-  ) => {
-    const target = e.target as HTMLButtonElement;
+  const handleWeekdayChange = (value: string) => {
+    const day = value;
+    if (value != "") {
+      console.log(day);
 
-    switch (target.id) {
-      case "monday":
-        if (days.includes("Montag")) {
-          setDays((prev) => prev.filter((day) => day !== "Montag"));
-        } else {
-          setDays((prev) => [...prev, "Montag"]);
-        }
-
-        break;
-      case "tuesday":
-        if (days.includes("Dienstag")) {
-          setDays((prev) => prev.filter((day) => day !== "Dienstag"));
-        } else {
-          setDays((prev) => [...prev, "Dienstag"]);
-        }
-        break;
-      case "wednesday":
-        if (days.includes("Mittwoch")) {
-          setDays((prev) => prev.filter((day) => day !== "Mittwoch"));
-        } else {
-          setDays((prev) => [...prev, "Mittwoch"]);
-        }
-        break;
-
-      case "thursday":
-        if (days.includes("Donnerstag")) {
-          setDays((prev) => prev.filter((day) => day !== "Donnerstag"));
-        } else {
-          setDays((prev) => [...prev, "Donnerstag"]);
-        }
-        break;
-      case "friday":
-        if (days.includes("Freitag")) {
-          setDays((prev) => prev.filter((day) => day !== "Freitag"));
-        } else {
-          setDays((prev) => [...prev, "Freitag"]);
-        }
-        break;
-      case "saturday":
-        if (days.includes("Samstag")) {
-          setDays((prev) => prev.filter((day) => day !== "Samstag"));
-        } else {
-          setDays((prev) => [...prev, "Samstag"]);
-        }
-        break;
-      case "sunday":
-        if (days.includes("Sonntag")) {
-          setDays((prev) => prev.filter((day) => day !== "Sonntag"));
-        } else {
-          setDays((prev) => [...prev, "Sonntag"]);
-        }
-        break;
-      default:
-        setDays([]);
-        break;
+      setOpen((prev) => !prev);
     }
   };
 
@@ -159,74 +121,58 @@ function AddEmployee() {
             value={pics}
           ></Input>
         </CardContent>
-        <CardFooter className="flex flex-col items-start gap-4">
+        <CardFooter className="flex flex-col items-center text-center w-full gap-4">
           <p>Einsatzplanung:</p>
-          <div className="flex flex-col items-start gap-6">
-            <div className="flex items-center gap-3">
-              {" "}
-              <Checkbox
-                onClick={handleCheckboxChange}
-                value={""}
-                id="monday"
-                checked={days.includes("Montag")}
-              />
-              <Label htmlFor="monday">Montag</Label>
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="tuesday"
-                checked={days.includes("Dienstag")}
-              />
-              <Label htmlFor="tuesday">Dienstag</Label>
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="wednesday"
-                checked={days.includes("Mittwoch")}
-              />
-              <Label htmlFor="wednesday">Mittwoch</Label>
-            </div>
-            <div className="flex items-start gap-2">
-              {" "}
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="thursday"
-                checked={days.includes("Donnerstag")}
-              />
-              <Label htmlFor="thursday">Donnerstag</Label>
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="friday"
-                checked={days.includes("Freitag")}
-              />
-              <Label htmlFor="friday">Freitag</Label>
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="saturday"
-                checked={days.includes("Samstag")}
-              />
-              <Label htmlFor="saturday">Samstag</Label>
-            </div>
-            <div className="flex items-start gap-4">
-              {" "}
-              <Checkbox
-                onClick={handleCheckboxChange}
-                id="sunday"
-                checked={days.includes("Sonntag")}
-              />
-              <Label htmlFor="sunday">Sonntag</Label>
-            </div>
+          <div className="flex flex-col items-center gap-4">
+            {" "}
+            <Select onValueChange={handleWeekdayChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Wähle einen Tag..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel className="text-center">Wochentage</SelectLabel>
+                  <SelectItem value="Montag">Montag</SelectItem>
+                  <SelectItem value="Dienstag">Dienstag</SelectItem>
+                  <SelectItem value="Mittwoch">Mittwoch</SelectItem>
+                  <SelectItem value="Donnerstag">Donnerstag</SelectItem>
+                  <SelectItem value="Freitag">Freitag</SelectItem>
+                  <SelectItem value="Samstag">Samstag</SelectItem>
+                  <SelectItem value="Sonntag">Sonntag</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {date && (
+              <div className="flex items-center gap-2 flex-col w-full">
+                <div className="flex items-center justify-between w-full gap-1">
+                  <Label htmlFor="time-picker" className="px-1">
+                    Beginn:
+                  </Label>
+                  <Input
+                    type="time"
+                    id="time-picker"
+                    step="1"
+                    defaultValue="07:00:00"
+                    className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                  />
+                </div>
+                <div className="flex items-center justify-between w-full gap-1">
+                  <Label htmlFor="time-picker" className="px-1">
+                    Ende:
+                  </Label>
+                  <Input
+                    type="time"
+                    id="time-picker"
+                    step="1"
+                    defaultValue="15:45:00"
+                    className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </CardFooter>
-        <div className="flex flex-col items-center justify-center outline p-4 shadow-md shadow-accent mx-6 rounded-2xl gap-4">
-          <h2>Anzahl tägl. Arbeitsstunden:</h2>
-          <p className="font-bold">{hour + " Stunden"}</p>
-          <Slider
-            className="w-[250px]"
-            defaultValue={[0]}
-            max={10}
-            step={1}
-            onValueChange={(value) => setHour(value[0])}
-          />
-        </div>
+
         <div className="flex items-center justify-center w-full">
           <Button className="w-[200px]" onClick={handleSaveEmployee}>
             Mitarbeiter Speichern

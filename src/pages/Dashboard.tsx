@@ -5,7 +5,7 @@ function Dashboard() {
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [sum, setSum] = useState(0);
   const [picsCount, setPicsCount] = useState(0);
-  const [awaitedPics, setAwaitedPics] = useState("");
+  const [awaitedPics, setAwaitedPics] = useState(0);
   const [employees, setEmployee] = useState<Employee[] | null>();
   useEffect(() => {
     const storedEmployees = localStorage.getItem("employees");
@@ -55,6 +55,7 @@ function Dashboard() {
             id="weekday"
             defaultValue={"day"}
             onChange={handleWeekdayChange}
+            value={awaitedPics}
           >
             <option value={"day"}>Tag auswählen...</option>
             <option value="Montag">Montag</option>
@@ -71,8 +72,7 @@ function Dashboard() {
                 className="py-2 px-6  outline rounded-4xl placeholder:font-extralight"
                 type="number"
                 placeholder="Erwartete Etiketten..."
-                onChange={(e) => setAwaitedPics(e.target.value)}
-                value={awaitedPics}
+                onChange={(e) => setAwaitedPics(Number(e.target.value))}
               />
             </div>
             <p className="font-bold text-2xl"></p>

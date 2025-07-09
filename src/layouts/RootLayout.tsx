@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 function RootLayout() {
   return (
-    <div className="pb-26 pt-21">
+    <div className="pb-26 pt-16">
       <Header />
       <Outlet />
       <Footer />

@@ -1,4 +1,9 @@
-import { Contact2, LayoutDashboard, UserPlus } from "lucide-react";
+import {
+  CalendarDays,
+  Contact2,
+  LayoutDashboard,
+  UserPlus,
+} from "lucide-react";
 import { Link } from "react-router";
 
 function Footer() {
@@ -14,6 +19,9 @@ function Footer() {
 
         <Link to={"/add"}>
           <UserPlus size={45} className="border p-1 rounded shadow " />
+        </Link>
+        <Link to={"/weekdays"}>
+          <CalendarDays size={45} className="border p-1 rounded shadow " />
         </Link>
       </nav>
     </footer>
