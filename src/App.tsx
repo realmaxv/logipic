@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./App.css";
 import RootLayout from "./layouts/RootLayout";
 import Dashboard from "./pages/Dashboard";
-import { ThemeProvider } from "./components/theme-provider";
 import Employees from "./pages/Employees";
 import AddForm from "./pages/AddForm";
 import Weekdays from "./pages/Weekdays";
@@ -21,10 +20,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      {" "}
-      <RouterProvider router={router} />{" "}
-    </ThemeProvider>
+    // <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    //   {" "}
+    <RouterProvider router={router} />
+    // </ThemeProvider>
   );
 }
 
