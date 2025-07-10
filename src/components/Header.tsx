@@ -2,7 +2,7 @@
 // import { useTheme } from "./theme-provider";
 import { ChevronLeft } from "lucide-react";
 import { Link, useLocation } from "react-router";
-
+import icon from "@/assets/icon.png";
 function Header() {
   // const { setTheme } = useTheme();
   // const [themeOn, setThemeOn] = useState(false);
@@ -32,11 +32,7 @@ function Header() {
         {themeOn && <MoonIcon />}
         <Switch onClick={handleDarkSwitch} id="dark-mode" />
       </div> */}
-      <img
-        src="/public/icon.png"
-        className="size-15 rounded-4xl"
-        alt="LogiPic icon"
-      />
+      <img src={icon} className="size-15 rounded-4xl" alt="LogiPic icon" />
     </header>
   );
 }
