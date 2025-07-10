@@ -1,70 +1,104 @@
-# React + TypeScript + Vite
+# 📦 LogiPic – Die smarte Mitarbeiter- und Etikettenplanung
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**LogiPic** ist eine moderne, responsive Web-App zur Planung von Mitarbeiterschichten und Etikettenleistung – speziell optimiert für mobile Nutzung, inklusive **PWA-Unterstützung** ✅.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧠 Funktionen
 
-## Expanding the ESLint configuration
+- 📋 Mitarbeiterverwaltung mit individuellen Arbeitszeiten und Leistung
+- 🗓️ Planung pro Wochentag inkl. Pics/h, Start-/Endzeit
+- 📊 Dashboard mit Leistungsübersicht: erwartete vs. geplante Etiketten
+- 📱 Mobile First & PWA-fähig: als App installierbar auf Android und iOS
+- 🌑 Darkmode inklusive
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ⚙️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+| Technologie                                                                          | Beschreibung     |
+| ------------------------------------------------------------------------------------ | ---------------- |
+| [React](https://react.dev/)                                                          | UI-Framework     |
+| [Vite](https://vitejs.dev/)                                                          | Build-Tool       |
+| [TypeScript](https://www.typescriptlang.org/)                                        | Typsicherheit    |
+| [TailwindCSS](https://tailwindcss.com/)                                              | Styling          |
+| [shadcn/ui](https://ui.shadcn.dev/)                                                  | UI-Komponenten   |
+| [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) | Datenspeicherung |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🚀 Installation
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Die App läuft lokal unter:  
+👉 https://logipic.netlify.app/
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📲 Als App zum Startbildschirm hinzufügen
+
+### ✅ Android (Google Chrome)
+
+1. Rufe `https://logipic.netlify.app` im Chrome-Browser auf
+2. Tippe oben rechts auf das **⋮ Menü**
+3. Wähle **„Zum Startbildschirm hinzufügen“**
+4. Bestätige – fertig ✅
+
+### 🍏 iPhone (Safari)
+
+1. Öffne `https://logipic.netlify.app` in **Safari**
+2. Tippe unten auf das **Teilen-Symbol (🧭)**
+3. Wähle **„Zum Home-Bildschirm“**
+4. Name vergeben → **Hinzufügen** tippen
+
+> Hinweis: Die App wird dann **im Vollbildmodus** gestartet und wirkt wie eine native Anwendung.
+
+---
+
+## 🛠️ Entwicklerhinweise
+
+### 📁 Datenstruktur (Beispiel)
+
+```ts
+Employee = {
+  name: string;
+  lastname: string;
+  average: number; // Pics/h
+  weekdays: [
+    {
+      day: "Montag" | ...;
+      start: string;
+      end: string;
+      hours: number;
+    }
+  ];
+}
 ```
-# logipic
+
+### 📦 localStorage-Keys
+
+- `"employees"` – gespeicherte Mitarbeiterdaten
+- `"weekPlan"` – erwartete Etiketten pro Wochentag
+
+---
+
+## 📌 Noch zu tun / Ideen
+
+- 🔄 Sync mit Backend
+- 🧮 Automatische Optimierungsvorschläge
+- 🖨️ Etiketten-Druckvorschau
+- 📉 Wöchentliche Auswertung / Export
+
+---
+
+## 🤝 Autor
+
+Erstellt mit ❤️ von [@realmaxv](https://github.com/realmaxv)
+
+---
+
+> **LogiPic** – Mehr Überblick. Weniger Zettel.
