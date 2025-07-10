@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import { ThemeProvider } from "./components/theme-provider";
 import Employees from "./pages/Employees";
 import AddForm from "./pages/AddForm";
+import Weekdays from "./pages/Weekdays";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", Component: Dashboard },
       { path: "/employees", Component: Employees },
+      { path: "/weekdays", Component: Weekdays },
       { path: "/add", Component: AddForm },
     ],
   },
