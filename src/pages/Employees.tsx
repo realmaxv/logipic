@@ -32,7 +32,7 @@ function Employees() {
   };
 
   return (
-    <section className="pt-2 pb-2 overflow-x-hidden flex flex-col items-center">
+    <section className="pt-6 pb-2 overflow-x-hidden flex flex-col items-center ">
       <div className="md:block flex items-start justify-center w-full">
         <Table className="overflow-y-scroll bg-accent rounded-2xl w-full max-w-5xl dark:bg-gray-900">
           <TableCaption className="dark:text-gray-300">

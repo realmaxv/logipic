@@ -47,7 +47,7 @@ function Dashboard() {
   const neededEmployees = missingHours > 0 ? Math.ceil(missingHours / 8) : 0;
 
   return (
-    <main className="w-full max-w-lg mx-auto p-4 flex flex-col gap-6 pt-10">
+    <main className="w-full max-w-lg mx-auto p-4 flex flex-col gap-6 pt-16">
       <h1 className="text-2xl font-bold text-center mb-4">Dashboard</h1>
 
       <label htmlFor="weekday" className="font-semibold mb-2 block">
