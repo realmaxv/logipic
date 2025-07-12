@@ -29,10 +29,14 @@
 
 ## 🚀 Installation
 
+Für Entwickler:
 ```bash
 npm install
 npm run dev
 ```
+
+
+Für Nutzer:
 
 Die App läuft lokal unter:  
 👉 https://logipic.netlify.app/

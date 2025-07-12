@@ -83,7 +83,7 @@ function Dashboard() {
         type="number"
         min={1}
         step={1}
-        value={avgPicsPerHour}
+        value={avgPicsPerHour || ""}
         onChange={(e) => setAvgPicsPerHour(Number(e.target.value))}
         className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
@@ -159,7 +159,8 @@ function Dashboard() {
                 {diffPics > 0 ? (
                   <>
                     <p className="text-red-600 font-semibold">
-                      Noch {missingHours.toFixed(2)} Arbeitsstunden nötig.
+                      Noch {missingHours.toFixed(2)} Arbeitsstunden nötig, um
+                      die übrigen {diffPics} Pics abzuarbeiten.
                     </p>
                     <p className="text-red-600 font-semibold">
                       Dafür werden ca. {neededEmployees} weitere Mitarbeiter
@@ -172,27 +173,103 @@ function Dashboard() {
                     <p className="text-green-600 font-semibold">
                       Du schaffst die Etikettenmenge!
                     </p>
-                    <p className="text-green-600">
-                      Du kannst bis zu{" "}
-                      {Math.floor(sumHours - expectedLabels / avgPicsPerHour)}{" "}
-                      Arbeitsstunden abgeben, ohne die Menge zu unterschreiten.
-                    </p>
-                    <p className="text-green-600">
-                      Zum Beispiel ein Mitarbeiter mit mindestens{" "}
-                      {Math.ceil(
-                        expectedLabels /
-                          (sumHours -
-                            Math.floor(
-                              sumHours - expectedLabels / avgPicsPerHour
-                            ))
-                      )}{" "}
-                      Pics/h könnte diese übernehmen.
-                    </p>
                   </>
                 )}
               </>
             )}
           </div>
+
+          {expectedLabels > 0 && diffPics <= 0 && (
+            <div className="mt-6 text-center space-y-2 bg-green-50 dark:bg-green-900 p-4 rounded-lg shadow-inner">
+              <h3 className="font-semibold text-lg">
+                Optionale Entlastung für andere Abteilungen
+              </h3>
+              <p className="text-sm text-gray-700 dark:text-gray-200">
+                Basierend auf der geplanten Gesamtleistung können folgende
+                Mitarbeiter zur Entlastung abgegeben werden:
+              </p>
+
+              {(() => {
+                let remainingPicsToSpare = totalPics - expectedLabels;
+                const possibleCombinations: { name: string; hours: number }[] =
+                  [];
+
+                filteredEmployees
+                  .sort((a, b) => {
+                    const aDay = a.weekdays?.find((w) => w.day === selectedDay);
+                    const bDay = b.weekdays?.find((w) => w.day === selectedDay);
+                    const aEffective = (aDay?.hours || 0) * a.average;
+                    const bEffective = (bDay?.hours || 0) * b.average;
+                    return bEffective - aEffective;
+                  })
+                  .forEach((emp) => {
+                    const dayData = emp.weekdays?.find(
+                      (w) => w.day === selectedDay
+                    );
+                    if (!dayData || remainingPicsToSpare <= 0) return;
+
+                    const maxRemovableHours = Math.floor(
+                      remainingPicsToSpare / emp.average
+                    );
+                    const removable = Math.min(
+                      dayData.hours,
+                      maxRemovableHours
+                    );
+
+                    if (removable > 0) {
+                      possibleCombinations.push({
+                        name: `${emp.name} ${emp.lastname}`,
+                        hours: removable,
+                      });
+                      remainingPicsToSpare -= removable * emp.average;
+                    }
+                  });
+
+                if (possibleCombinations.length === 0) {
+                  return (
+                    <p className="text-sm text-gray-500 mt-2">
+                      Keine sinnvolle Entlastung möglich, ohne das Ziel zu
+                      gefährden.
+                    </p>
+                  );
+                }
+
+                return (
+                  <>
+                    <ul className="space-y-2 text-left mt-2">
+                      {possibleCombinations.map((entry, index) => (
+                        <li key={index} className="text-sm">
+                          <strong>{entry.name}</strong> könnte bis zu{" "}
+                          <strong>{entry.hours}h</strong> abgegeben werden.
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">
+                      Mit dieser Entlastung verbleiben ca.{" "}
+                      <strong>
+                        {Math.floor(
+                          totalPics - (totalPics - remainingPicsToSpare)
+                        )}
+                      </strong>{" "}
+                      schaffbare Etiketten die selbst abgefangen werden können
+                      um dennoch die Tagesfertigkeit gewährleisten zu können.
+                    </p>
+                    <p className="text-sm text-gray-700 dark:text-gray-400 mt-2">
+                      Berechnung: Entlastbare Menge = Gesamtleistung (
+                      {Math.floor(totalPics)}) − Ziel ({expectedLabels}) ={" "}
+                      {Math.floor(totalPics - expectedLabels)} mögliche Pics.
+                      Diese wurden auf Mitarbeiter mit Stunden × Durchschnitt
+                      verteilt.
+                    </p>
+                  </>
+                );
+              })()}
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                Die Etikettenmenge wird bei dieser Entlastung trotzdem noch
+                erfüllt.
+              </p>
+            </div>
+          )}
         </>
       )}
     </main>

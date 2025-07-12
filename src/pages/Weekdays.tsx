@@ -44,7 +44,7 @@ function Weekdays() {
           <label className="font-medium">{day}</label>
           <input
             type="number"
-            value={value}
+            value={value || ""}
             onChange={(e) => handleChange(day, Number(e.target.value))}
             className="w-32 px-2 py-1 rounded border outline-none"
           />
