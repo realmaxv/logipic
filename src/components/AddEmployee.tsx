@@ -195,7 +195,7 @@ function AddEmployee() {
                 pics: parseFloat(parseFloat(e.target.value).toFixed(2)),
               }))
             }
-            value={form.pics}
+            value={form.pics || ""}
           ></Input>
         </CardContent>
         <CardFooter className="flex flex-col items-start justify-center text-center w-full gap-6 px-4 pb-4">
