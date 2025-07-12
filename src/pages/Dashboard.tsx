@@ -160,7 +160,7 @@ function Dashboard() {
                   <>
                     <p className="text-red-600 font-semibold">
                       Noch {missingHours.toFixed(2)} Arbeitsstunden nötig, um
-                      die übrigen {diffPics} Pics abzuarbeiten.
+                      die übrigen {Math.round(diffPics)} Pics abzuarbeiten.
                     </p>
                     <p className="text-red-600 font-semibold">
                       Dafür werden ca. {neededEmployees} weitere Mitarbeiter
