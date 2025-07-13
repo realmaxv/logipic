@@ -1,5 +1,6 @@
 import type { Employee } from "@/components/AddEmployee";
-import { UserRoundPen } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Search, UserRoundPen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
@@ -14,6 +15,7 @@ function Employees() {
     "Sonntag",
   ];
   const [employee, setEmployee] = useState<Employee[] | null>();
+  const [search, setSearch] = useState<Employee[] | null>();
 
   useEffect(() => {
     const storedEmployees = localStorage.getItem("employees");
@@ -33,10 +35,26 @@ function Employees() {
     localStorage.setItem("employees", JSON.stringify(updated));
   };
 
+  const handleFilterEmployee = (value: string) => {
+    const filtered = employee?.filter((emp) => {
+      const fullName = `${emp.name} ${emp.lastname}`.toLowerCase();
+      return fullName.includes(value.toLowerCase());
+    });
+    setSearch(filtered ?? []);
+  };
+  const displayedEmployees = search ?? employee;
+
   return (
     <section className="pt-6 pb-2 overflow-x-hidden flex flex-col items-center ">
-      <ul className="block md:hidden w-full max-w-md mx-auto space-y-4">
-        {employee
+      <div className="flex items-center justify-center  gap-4 p-4 overflow-hidden">
+        <Search size={35} />
+        <Input
+          onChange={(e) => handleFilterEmployee(e.target.value)}
+          placeholder="Mitarbeiter suchen..."
+        />
+      </div>
+      <ul className="block md:hidden w-full max-w-md mx-auto space-y-4 overflow-hidden">
+        {displayedEmployees
           ?.sort((a, b) => a.lastname.localeCompare(b.lastname))
           .map((emp) => {
             const totalHours =
