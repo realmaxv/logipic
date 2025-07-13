@@ -130,7 +130,7 @@ function Dashboard() {
           <ul
             className={`space-y-4 transition-all duration-500 ease-in-out transform overflow-hidden ${
               open
-                ? "opacity-100 max-h-[1000px] translate-y-0"
+                ? "opacity-100 max-h-full translate-y-0"
                 : "opacity-0 max-h-0 -translate-y-2"
             }`}
           >
