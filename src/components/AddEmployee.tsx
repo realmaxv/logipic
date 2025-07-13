@@ -45,7 +45,7 @@ function AddEmployee() {
   });
 
   const [days, setDays] = useState<Workday[]>([]);
-  const [employee, setEmployee] = useState<Employee[]>([]);
+
   const navigate = useNavigate();
 
   const handleSaveEmployee: React.MouseEventHandler<HTMLButtonElement> = (
@@ -67,7 +67,6 @@ function AddEmployee() {
         weekdays: days,
       };
 
-      setEmployee((prev) => [...prev, sum]);
       const stored = localStorage.getItem("employees");
       const updatedEmployees = stored ? [...JSON.parse(stored), sum] : [sum];
       localStorage.setItem("employees", JSON.stringify(updatedEmployees));
@@ -88,8 +87,6 @@ function AddEmployee() {
       alert("Bitte fülle erst alle Felder aus.");
     }
   };
-
-  console.log(employee);
 
   const handleWeekdayChange = (value: string) => {
     if (value !== "") {
