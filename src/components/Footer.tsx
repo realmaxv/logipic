@@ -1,9 +1,4 @@
-import {
-  CalendarDays,
-  Contact2,
-  LayoutDashboard,
-  UserPlus,
-} from "lucide-react";
+import { CalendarDays, Contact2, UserPlus } from "lucide-react";
 import icon from "@/assets/icon.png";
 
 import { NavLink } from "react-router";

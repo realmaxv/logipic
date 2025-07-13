@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router";
-import icon from "@/assets/icon.png";
+import icon from "../assets/icon.png";
 
 function Header() {
   const location = useLocation();
