@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import type { Employee } from "@/components/AddEmployee";
+import { SquareArrowDown, SquareArrowUp } from "lucide-react";
 
 function Dashboard() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedDay, setSelectedDay] = useState<string>("");
   const [weekPlan, setWeekPlan] = useState<{ [key: string]: number }>({});
   const [avgPicsPerHour, setAvgPicsPerHour] = useState<number>(60); // mindestschnitt selbst festlegen
-
+  const [open, setOpen] = useState(false);
   // Lade employees aus localStorage
   useEffect(() => {
     const storedEmployees = localStorage.getItem("employees");
@@ -109,11 +110,30 @@ function Dashboard() {
 
       {filteredEmployees.length > 0 && (
         <>
-          <h2 className="text-xl font-semibold">
-            Geplante Mitarbeiter ({filteredEmployees.length})
-          </h2>
+          {selectedDay && filteredEmployees.length > 0 && (
+            <div className="flex items-center justify-center gap-2  cursor-pointer">
+              <div>
+                <h2 className="text-xl font-semibold">
+                  Geplante Mitarbeiter ({filteredEmployees.length})
+                </h2>
 
-          <ul className="space-y-4">
+                <div
+                  onClick={() => setOpen((e) => !e)}
+                  className="flex items-center justify-center gap-2 cursor-pointer shadow inset-1 rounded mt-2"
+                >
+                  <p>Liste {`${open ? "schließen" : "öffnen"}`}</p>
+                  {open ? <SquareArrowUp /> : <SquareArrowDown />}
+                </div>
+              </div>
+            </div>
+          )}
+          <ul
+            className={`space-y-4 transition-all duration-500 ease-in-out transform overflow-hidden ${
+              open
+                ? "opacity-100 max-h-[1000px] translate-y-0"
+                : "opacity-0 max-h-0 -translate-y-2"
+            }`}
+          >
             {filteredEmployees.map((emp) => {
               const dayData = emp.weekdays?.find((w) => w.day === selectedDay);
               if (!dayData) return null;
