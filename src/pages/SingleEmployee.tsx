@@ -93,7 +93,6 @@ function SingleEmployee() {
 
     const parsedEmployees: Employee[] = JSON.parse(storedEmployees);
 
-    // Neues Array mit aktualisiertem Eintrag
     const updatedEmployees = parsedEmployees.map((emp) => {
       if (emp.id === id) {
         return {
@@ -106,7 +105,6 @@ function SingleEmployee() {
       }
       return emp;
     });
-    // Zurück in den localStorage speichern
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
     alert("Mitarbeiter aktualisiert!");
     navigate("/employees");
@@ -171,15 +169,12 @@ function SingleEmployee() {
                       onChange={(e) => {
                         setUpdate((prev) => {
                           if (e.target.checked) {
-                            // Add workday with existing values if present, else default
                             const existing = prev.weekdays.find(
                               (d) => d.day === workday.day
                             );
                             if (existing) {
-                              // Bereits vorhanden, keine Änderung nötig
                               return prev;
                             } else {
-                              // Neu hinzufügen mit Defaultwerten
                               const newDay: Workday = {
                                 day: workday.day,
                                 start: "",
