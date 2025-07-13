@@ -38,7 +38,7 @@ function Weekdays() {
 
   return (
     <main className="w-full max-w-md mx-auto p-4 space-y-4 mt-10">
-      <h1 className="text-xl font-bold text-center">Wöchentliche Planung</h1>
+      <h1 className="text-xl font-bold text-center">{`Wöchtenliche Planung (Pics/Tag)`}</h1>
       {Object.entries(plan).map(([day, value]) => (
         <div key={day} className="flex justify-between items-center">
           <label className="font-medium">{day}</label>
@@ -47,7 +47,7 @@ function Weekdays() {
             value={value || ""}
             onChange={(e) => handleChange(day, Number(e.target.value))}
             className="w-32 px-2 py-1 rounded border outline-none"
-          />
+          />{" "}
         </div>
       ))}
       <div className="flex justify-between gap-4 pt-4">
