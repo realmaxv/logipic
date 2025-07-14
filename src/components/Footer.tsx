@@ -5,24 +5,19 @@ import { NavLink } from "react-router";
 
 function Footer() {
   return (
-    <footer className="h-25 w-full bg-accent fixed bottom-0 rounded flex items-center justify-center pb-4">
-      <nav className="flex items-center justify-evenly w-full">
-        <NavLink
-          to={"/"}
-          className="rounded p-1 border-2  shadow-md"
-          aria-current="page"
-        >
-          <img src={icon} className="size-9 rounded-4xl" alt="LogiPic icon" />
+    <footer className="h-20 w-full bg-white border-t border-gray-200 flex items-center justify-center">
+      <nav className="flex items-center justify-evenly w-full px-4">
+        <NavLink to="/" className="rounded-full p-1" aria-current="page">
+          <img src={icon} className="size-8 rounded-full" alt="LogiPic icon" />
         </NavLink>
-        <NavLink to={"/employees"}>
-          <Contact2 size={45} className="border p-1 rounded shadow " />
+        <NavLink to="/employees">
+          <Contact2 size={32} className="text-gray-600" />
         </NavLink>
-
-        <NavLink to={"/add"}>
-          <UserPlus size={45} className="border p-1 rounded shadow " />
+        <NavLink to="/add">
+          <UserPlus size={32} className="text-gray-600" />
         </NavLink>
-        <NavLink to={"/weekdays"}>
-          <CalendarDays size={45} className="border p-1 rounded shadow " />
+        <NavLink to="/weekdays">
+          <CalendarDays size={32} className="text-gray-600" />
         </NavLink>
       </nav>
     </footer>
