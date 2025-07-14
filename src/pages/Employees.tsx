@@ -45,7 +45,7 @@ function Employees() {
   const displayedEmployees = search ?? employee;
 
   return (
-    <section className="pt-6 pb-2 overflow-x-hidden flex flex-col items-center ">
+    <section className="pt-6 pb-2 overflow-x-hidden flex flex-col items-center p-4 ">
       <div className="flex items-center justify-center  gap-4 p-4 overflow-hidden">
         <Search size={35} />
         <Input
