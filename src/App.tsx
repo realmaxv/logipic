@@ -21,6 +21,16 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const isIos = /iphone|ipad|ipod/.test(
+    window.navigator.userAgent.toLowerCase()
+  );
+  const isInStandaloneMode =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    "standalone" in window.navigator && (window.navigator as any).standalone;
+
+  if (isIos && !isInStandaloneMode) {
+    showIosInstallInstructions();
+  }
   return (
     // <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
     //   {" "}
@@ -30,3 +40,14 @@ function App() {
 }
 
 export default App;
+function showIosInstallInstructions() {
+  const text = `🍎 Für iOS (Safari)
+	1.	Öffne die App in Safari.
+	2.	Tippe unten auf das Teilen-Symbol (Quadrat mit Pfeil).
+	3.	Wähle „Zum Home-Bildschirm“.
+	4.	Gib einen Namen ein und tippe auf „Hinzufügen“.
+
+⸻
+`;
+  alert(text);
+}

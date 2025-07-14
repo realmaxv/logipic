@@ -4,18 +4,23 @@ import icon from "../assets/icon.png";
 
 function Header() {
   const location = useLocation();
-  const navigate = useNavigate(); // 👈 React Router Hook
+  const navigate = useNavigate();
 
   return (
-    <header className="h-15 w-full flex items-center justify-between px-6 fixed top-0 bg-white dark:bg-stone-800 z-50 shadow-md">
+    <header className="h-16 w-full flex items-center justify-between px-4 bg-white border-b border-gray-200">
       {location.pathname !== "/" ? (
-        <button onClick={() => navigate(-1)}>
-          <ChevronLeft size={30} />
+        <button
+          onClick={() => navigate(-1)}
+          className="text-gray-600"
+          aria-label="Zurück"
+        >
+          <ChevronLeft size={28} />
         </button>
       ) : (
-        <div></div>
+        <div className="w-7" />
       )}
-      <img src={icon} className="size-15 rounded-4xl" alt="LogiPic icon" />
+      <img src={icon} className="w-10 h-10 rounded-full" alt="LogiPic icon" />
+      <div className="w-7" />
     </header>
   );
 }
