@@ -156,10 +156,10 @@ function SingleEmployee() {
           <label className="block text-sm font-medium mb-2">
             📅 Arbeitstage
           </label>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2">
             {WORKDAYS.map((workday) => {
               return (
-                <div key={workday.day}>
+                <div className="" key={workday.day}>
                   <label className="flex items-center space-x-2">
                     <input
                       type="checkbox"
