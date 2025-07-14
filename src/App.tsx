@@ -41,13 +41,20 @@ function App() {
 
 export default App;
 function showIosInstallInstructions() {
-  const text = `🍎 Für iOS (Safari)
+  const text = `
+📱 Anleitung: So installierst du LogiPic als App
+
+✅ Für Android (Chrome, Edge, Samsung Internet)
+	1.	Öffne die App in deinem Browser.
+	2.	Tippe oben rechts auf das Menü (⋮).
+	3.	Wähle „App installieren“ oder „Zum Startbildschirm hinzufügen“.
+	4.	Bestätige mit „Installieren“.
+
+🍎 Für iOS (Safari)
 	1.	Öffne die App in Safari.
 	2.	Tippe unten auf das Teilen-Symbol (Quadrat mit Pfeil).
 	3.	Wähle „Zum Home-Bildschirm“.
 	4.	Gib einen Namen ein und tippe auf „Hinzufügen“.
-
-⸻
 `;
   alert(text);
 }
