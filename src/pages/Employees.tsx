@@ -53,7 +53,7 @@ function Employees() {
           placeholder="Mitarbeiter suchen..."
         />
       </div>
-      <ul className="block md:hidden w-full max-w-md mx-auto space-y-4 overflow-hidden">
+      <ul className="block w-full max-w-md mx-auto space-y-4 overflow-hidden">
         {displayedEmployees
           ?.sort((a, b) => a.lastname.localeCompare(b.lastname))
           .map((emp) => {
