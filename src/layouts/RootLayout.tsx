@@ -2,6 +2,9 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { Outlet } from "react-router";
 
+
+
+
 function RootLayout() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
