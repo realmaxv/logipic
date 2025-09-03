@@ -9,7 +9,6 @@ const employees = [
   { name: "Laura", lastname: "Krüger", average: 84.6, weekday: "tuesday" },
   { name: "Tom", lastname: "Fischer", average: 73.9, weekday: "wednesday" },
   { name: "Nina", lastname: "Bauer", average: 119.5, weekday: "thursday" },
-  // Neue fiktive Mitarbeitereinträge
   { name: "Emily", lastname: "Schneider", average: 91.2, weekday: "monday" },
   { name: "Peter", lastname: "Müller", average: 91.2, weekday: "saturday" },
   { name: "Leon", lastname: "Hartmann", average: 69.7, weekday: "tuesday" },
