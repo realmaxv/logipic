@@ -1,4 +1,4 @@
-import type { Employee } from "@/components/AddEmployee";
+import { getEmployees, deleteEmployee, type Employee } from "@/lib/api";
 import { Input } from "@/components/ui/input";
 import { Search, UserRoundPen } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -14,25 +14,34 @@ function Employees() {
     "Samstag",
     "Sonntag",
   ];
-  const [employee, setEmployee] = useState<Employee[] | null>();
-  const [search, setSearch] = useState<Employee[] | null>();
+  const [employee, setEmployee] = useState<Employee[] | null>(null);
+  const [search, setSearch] = useState<Employee[] | null>(null);
 
   useEffect(() => {
-    const storedEmployees = localStorage.getItem("employees");
-    if (storedEmployees) {
-      const parsedEmployees: Employee[] = JSON.parse(storedEmployees);
-      setEmployee(parsedEmployees);
-    }
+    // const storedEmployees = localStorage.getItem("employees");
+    // if (storedEmployees) {
+    //   const parsedEmployees: Employee[] = JSON.parse(storedEmployees);
+    //   setEmployee(parsedEmployees);
+    // }
+
+    // ----- Switch auf API
+    getEmployees().then(setEmployee);
   }, []);
 
-  const handleDeleteEmployee = (id: string, name: string, lastname: string) => {
+  const handleDeleteEmployee = async (
+    id: string,
+    name: string,
+    lastname: string
+  ) => {
     const confirmDelete = window.confirm(
       `Sicher Mitarbeiter "${name} ${lastname}" löschen?`
     );
     if (!confirmDelete) return;
-    const updated = employee?.filter((emp) => emp.id !== id) || [];
+    await deleteEmployee(id);
+    const updated = await getEmployees();
     setEmployee(updated);
-    localStorage.setItem("employees", JSON.stringify(updated));
+    // keep current filter if any
+    setSearch((prev) => (prev ? prev.filter((emp) => emp.id !== id) : null));
   };
 
   const handleFilterEmployee = (value: string) => {
@@ -42,7 +51,7 @@ function Employees() {
     });
     setSearch(filtered ?? []);
   };
-  const displayedEmployees = search ?? employee;
+  const displayedEmployees = search ?? employee ?? [];
 
   return (
     <section className="pt-6 pb-2 overflow-x-hidden flex flex-col items-center p-4 ">

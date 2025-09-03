@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getWeekPlan, saveWeekPlan, type WeekPlan } from "@/lib/api";
 
 const defaultPlan = {
   Montag: 0,
@@ -11,29 +12,26 @@ const defaultPlan = {
 };
 
 function Weekdays() {
-  const [plan, setPlan] = useState<{ [key: string]: number }>(defaultPlan);
+  const [plan, setPlan] = useState<WeekPlan>(defaultPlan);
 
   useEffect(() => {
-    const stored = localStorage.getItem("weekPlan");
-    if (stored) {
-      setPlan(JSON.parse(stored));
-    }
+    getWeekPlan().then((wp) => setPlan({ ...defaultPlan, ...wp }));
   }, []);
 
   const handleChange = (day: string, value: number) => {
     const updated = { ...plan, [day]: value };
     setPlan(updated);
-    localStorage.setItem("weekPlan", JSON.stringify(updated));
   };
 
   const handleSave = () => {
-    localStorage.setItem("weekPlan", JSON.stringify(plan));
-    alert("Wochenplanung gepeichert.");
+    saveWeekPlan(plan).then(() => {
+      alert("Wochenplanung gespeichert.");
+    });
   };
 
   const handleReset = () => {
     setPlan(defaultPlan);
-    localStorage.removeItem("weekPlan");
+    saveWeekPlan(defaultPlan);
   };
 
   return (

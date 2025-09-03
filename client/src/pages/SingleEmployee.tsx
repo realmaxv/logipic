@@ -1,3 +1,10 @@
+import type { Employee, Workday } from "@/lib/api";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { getEmployee, updateEmployee } from "@/lib/api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+
 const WORKDAYS: Workday[] = [
   { day: "Montag", start: "", end: "", hours: 0 },
   { day: "Dienstag", start: "", end: "", hours: 0 },
@@ -7,15 +14,10 @@ const WORKDAYS: Workday[] = [
   { day: "Samstag", start: "", end: "", hours: 0 },
   { day: "Sonntag", start: "", end: "", hours: 0 },
 ];
-import type { Employee, Workday } from "@/components/AddEmployee";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
 
 function SingleEmployee() {
   const navigate = useNavigate();
-  const [employee, setEmployee] = useState<Employee[] | null>(null);
+  const [employee, setEmployee] = useState<Employee | null>(null);
   const [update, setUpdate] = useState<{
     name: string;
     lastname: string;
@@ -65,47 +67,37 @@ function SingleEmployee() {
   }
 
   useEffect(() => {
-    const storedEmployees = localStorage.getItem("employees");
-    if (storedEmployees) {
-      const parsedEmployees: Employee[] = JSON.parse(storedEmployees);
-      const foundEmployee = parsedEmployees.find((emp) => emp.id === id);
-      if (foundEmployee) {
-        setEmployee([foundEmployee]);
-        setUpdate({
-          name: foundEmployee.name,
-          lastname: foundEmployee.lastname,
-          average: foundEmployee.average,
-          weekdays: foundEmployee.weekdays || [],
-        });
-      }
-    }
+    if (!id) return;
+
+    getEmployee(id).then((emp) => {
+      if (!emp) return;
+      setEmployee(emp);
+      setUpdate({
+        name: emp.name,
+        lastname: emp.lastname,
+        average: emp.average,
+        weekdays: emp.weekdays || [],
+      });
+    });
   }, [id]);
 
   if (!employee) {
     return null;
   }
 
-  const handleSaveClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleSaveClick: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     e.preventDefault();
+    if (!id) return;
 
-    const storedEmployees = localStorage.getItem("employees");
-    if (!storedEmployees) return;
-
-    const parsedEmployees: Employee[] = JSON.parse(storedEmployees);
-
-    const updatedEmployees = parsedEmployees.map((emp) => {
-      if (emp.id === id) {
-        return {
-          ...emp,
-          name: update.name,
-          lastname: update.lastname,
-          average: update.average,
-          weekdays: update.weekdays,
-        };
-      }
-      return emp;
+    await updateEmployee(id, {
+      name: update.name,
+      lastname: update.lastname,
+      average: update.average,
+      weekdays: update.weekdays,
     });
-    localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+
     alert("Mitarbeiter aktualisiert!");
     navigate("/employees");
   };

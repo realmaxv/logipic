@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
-import type { Employee } from "@/components/AddEmployee";
+import {
+  getEmployees,
+  getWeekPlan,
+  type Employee,
+  type WeekPlan,
+} from "@/lib/api";
 import { SquareArrowDown, SquareArrowUp } from "lucide-react";
 
 function Dashboard() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedDay, setSelectedDay] = useState<string>("");
-  const [weekPlan, setWeekPlan] = useState<{ [key: string]: number }>({});
+  const [weekPlan, setWeekPlan] = useState<WeekPlan>({
+    Montag: 0,
+    Dienstag: 0,
+    Mittwoch: 0,
+    Donnerstag: 0,
+    Freitag: 0,
+    Samstag: 0,
+    Sonntag: 0,
+  });
   const [avgPicsPerHour, setAvgPicsPerHour] = useState<number>(60); // mindestschnitt selbst festlegen
   const [open, setOpen] = useState(false);
-  // Lade employees aus localStorage
+  // Lade Daten vom Backend (statt localStorage)
   useEffect(() => {
-    const storedEmployees = localStorage.getItem("employees");
-    if (storedEmployees) {
-      setEmployees(JSON.parse(storedEmployees));
-    }
-  }, []);
-
-  // Lade Wochenplanung aus localStorage
-  useEffect(() => {
-    const storedWeekPlan = localStorage.getItem("weekPlan");
-    if (storedWeekPlan) {
-      setWeekPlan(JSON.parse(storedWeekPlan));
-    }
+    (async () => {
+      const [emps, plan] = await Promise.all([getEmployees(), getWeekPlan()]);
+      setEmployees(emps);
+      setWeekPlan((prev) => ({ ...prev, ...plan }));
+    })();
   }, []);
 
   const filteredEmployees = selectedDay

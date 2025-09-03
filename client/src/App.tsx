@@ -31,12 +31,7 @@ function App() {
   if (isIos && !isInStandaloneMode) {
     showIosInstallInstructions();
   }
-  return (
-    // <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-    //   {" "}
-    <RouterProvider router={router} />
-    // </ThemeProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

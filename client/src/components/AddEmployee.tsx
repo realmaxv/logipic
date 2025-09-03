@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router";
+import { createEmployee, type Employee, type Workday } from "@/lib/api";
 
 import {
   Select,
@@ -18,19 +19,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { SaveIcon } from "lucide-react";
-export type Workday = {
-  day: string;
-  start: string;
-  end: string;
-  hours: number;
-};
-export type Employee = {
-  name: string;
-  lastname: string;
-  average: number;
-  weekdays: Workday[];
-  id: string;
-};
 
 function AddEmployee() {
   const [form, setForm] = useState({
@@ -48,7 +36,7 @@ function AddEmployee() {
 
   const navigate = useNavigate();
 
-  const handleSaveEmployee: React.MouseEventHandler<HTMLButtonElement> = (
+  const handleSaveEmployee: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
@@ -59,17 +47,14 @@ function AddEmployee() {
       form.hour >= 1 &&
       form.pics >= 1
     ) {
-      const sum: Employee = {
-        average: form.pics,
+      const payload: Employee = {
         id: crypto.randomUUID(),
-        lastname: form.lastName,
         name: form.firstName,
+        lastname: form.lastName,
+        average: form.pics,
         weekdays: days,
       };
-
-      const stored = localStorage.getItem("employees");
-      const updatedEmployees = stored ? [...JSON.parse(stored), sum] : [sum];
-      localStorage.setItem("employees", JSON.stringify(updatedEmployees));
+      await createEmployee(payload);
       setDays([]);
       setForm({
         day: "",

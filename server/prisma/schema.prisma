@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id        String @id @default(uuid())
+  name      String
+  lastname  String
+  average   Float
+  weekdays  Workday[]
+  createdAt DateTime  @default(now())
+}
+model Workday {
+  id         Int      @id @default(autoincrement())
+  day        String
+  start      String
+  end        String
+  hours      Float
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model WeekPlanEntry {
+  id      Int    @id @default(autoincrement())
+  day     String @unique
+  planned Int
+}
