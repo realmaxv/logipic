@@ -17,14 +17,17 @@ app.use(express.json());
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
-// Employees
+// Employees - liest alle MA aus MySQL
 app.get("/employees", async (_req, res) => {
   const rows = await prisma.employee.findMany({
+    // lädt Relation weekdays mit (JOIN)
     include: { weekdays: true },
+    // sortiert für eine saubere, stabile Liste
     orderBy: { lastname: "asc" },
   });
   res.json(rows);
 });
+
 app.get("/employees/:id", async (req, res) => {
   const row = await prisma.employee.findUnique({
     where: { id: req.params.id },
@@ -33,6 +36,7 @@ app.get("/employees/:id", async (req, res) => {
   if (!row) return res.status(404).json({ error: "Not found" });
   res.json(row);
 });
+
 app.post("/employees", async (req, res) => {
   const { id, name, lastname, average, weekdays } = req.body;
   if (!name || !lastname || average == null)
@@ -56,8 +60,10 @@ app.post("/employees", async (req, res) => {
   });
   res.status(201).json(created);
 });
+
 app.patch("/employees/:id", async (req, res) => {
   const { name, lastname, average, weekdays } = req.body;
+  // erst alten Datensatz löschen, dann neu anlegen -> Datensatz nie "halb-aktuallisiert"
   const updated = await prisma.$transaction(async (tx) => {
     await tx.workday.deleteMany({ where: { employeeId: req.params.id } });
     return tx.employee.update({
@@ -82,12 +88,13 @@ app.patch("/employees/:id", async (req, res) => {
   });
   res.json(updated);
 });
+
 app.delete("/employees/:id", async (req, res) => {
   await prisma.employee.delete({ where: { id: req.params.id } });
-  res.status(204).end();
+  res.status(204).end(); // 204 -  No Content -> korrekte Anwtort ohne body
 });
 
-// Weekplan
+// Weekplan ->
 app.get("/weekplan", async (_req, res) => {
   const rows = await prisma.weekPlanEntry.findMany();
   res.json(Object.fromEntries(rows.map((r) => [r.day, r.planned])));

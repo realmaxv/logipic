@@ -2,9 +2,9 @@ import AddEmployee from "@/components/AddEmployee";
 
 function AddForm() {
   return (
-    <div className="mt-5">
+    <form className="mt-5">
       <AddEmployee />
-    </div>
+    </form>
   );
 }
 

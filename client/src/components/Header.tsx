@@ -7,7 +7,7 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="h-16 w-full flex items-center justify-between px-4 bg-white border-b border-gray-200">
+    <header className="h-16 w-full flex items-center justify-between px-4 bg-stone-200/40 border-b border-gray-200 shadow-sm/10">
       {location.pathname !== "/" ? (
         <button
           onClick={() => navigate(-1)}

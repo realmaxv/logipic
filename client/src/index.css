@@ -118,7 +118,7 @@
     @apply bg-background text-foreground;
   }
   .active {
-    @apply shadow-2xl shadow-black;
+    @apply shadow-2xl shadow-black bg-white rounded-full p-2;
   }
 
   .safe-top {

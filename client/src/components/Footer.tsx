@@ -5,7 +5,7 @@ import { NavLink } from "react-router";
 
 function Footer() {
   return (
-    <footer className="h-20 w-full bg-white border-t border-gray-200 flex items-center justify-center">
+    <footer className="h-20 w-full bg-stone-200/40 border-t border-gray-200 flex items-center shadow-sm/10 justify-center">
       <nav className="flex items-center justify-evenly w-full px-4">
         <NavLink to="/" className="rounded-full p-1" aria-current="page">
           <img src={icon} className="size-8 rounded-full" alt="LogiPic icon" />
